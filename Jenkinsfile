@@ -48,5 +48,19 @@ pipeline {
                 echo "deploying the app...."
             }
         }
+        stage('commit version update') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'Mehdi-GitHub-Token', passwordVariable: 'GITHUB_PASSWORD', usernameVariable: 'GITHUB_USERNAME')]) {
+                        sh 'git config --global user.email "jenkins@example.com"'
+                        sh 'git config --global user.name "jenkins"'
+                        sh "git remote set-url origin https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Mehdi-Chakroun/simple-java-maven-app"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version update"'
+                        sh 'git push origin HEAD:jenkins-job'
+                    }
+                }
+            }
+        }
     }
 }
