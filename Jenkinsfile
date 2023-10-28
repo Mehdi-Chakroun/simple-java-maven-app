@@ -56,6 +56,7 @@ pipeline {
                         sh 'git add .'
                         sh 'git commit -m "ci: version update"'
                         sh 'git push origin HEAD:jenkins-job'
+                    }
                 }
             }
         }
